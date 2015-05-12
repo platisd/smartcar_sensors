@@ -6,7 +6,7 @@
 */
 #include "Smartcar_sensors.h"
 
-volatile unsigned int _pulseCounter_sensors = 0;
+volatile unsigned long _pulseCounter_sensors = 0;
 
 Odometer::Odometer(){
 }

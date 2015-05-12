@@ -40,7 +40,8 @@ int Gyroscope::getAngularDisplacement(){
 void Gyroscope::updateDisplacement(){ //TO-DO: optimize
 	volatile float gyroRate = 0;
 	volatile int gyroValue = getGyroValues();
-	if (abs(GYRO_OFFSET - gyroValue) > GYRO_THRESHOLD){
+	volatile short drift = GYRO_OFFSET - gyroValue;
+	if (abs(drift) > GYRO_THRESHOLD){
 		gyroRate = (gyroValue - GYRO_OFFSET) * GYRO_SENSITIVITY;
 	}
 	volatile unsigned long now = millis();
@@ -97,7 +98,7 @@ void Gyroscope::writeRegister(int deviceAddress, byte address, byte val) {
 }
 
 int Gyroscope::readRegister(int deviceAddress, byte address){
-	interrupts();
+	interrupts(); //sei();
 	int v;
 	Wire.beginTransmission(deviceAddress);
 	Wire.write(address); // register to read
